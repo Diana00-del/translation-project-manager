@@ -1,0 +1,304 @@
+﻿@page "{id:long}"
+@using TranslationProjectManager.Data
+@using TranslationProjectManager.Utils
+@model TranslationProjectManager.Pages.TranslationProjects.ViewModel
+@{
+}
+
+<ul class="nav nav-tabs" id="projectTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="project-data-tab" data-bs-toggle="tab" data-bs-target="#project-data" type="button" role="tab" aria-controls="project-data" aria-selected="true">Project data</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">Files</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks" type="button" role="tab" aria-controls="tasks" aria-selected="false">Tasks</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="actions-tab" data-bs-toggle="tab" data-bs-target="#actions" type="button" role="tab" aria-controls="actions" aria-selected="false">Actions</button>
+    </li>
+</ul>
+<div class="tab-content" id="projectTabContent">
+    <div class="tab-pane fade show active pt-3 pb-3" id="project-data" role="tabpanel" aria-labelledby="project-data-tab">
+        <h2>Project info</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Id" class="form-control" disabled />
+            <label asp-for="Project.Id" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Title" class="form-control" disabled />
+            <label asp-for="Project.Title" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Description" class="form-control" disabled />
+            <label asp-for="Project.Description" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Status" class="form-control" disabled />
+            <label asp-for="Project.Status" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3 input-group">
+            <input asp-for="Project.Client" class="form-control" disabled />
+            <label asp-for="Project.Client" class="form-label"></label>
+            <a asp-page="/Clients/View" asp-route-id="@Model.Project.ClientId" class="btn btn-secondary d-flex align-items-center">See details</a>
+        </div>
+        <div class="form-floating mb-3 input-group">
+            <input asp-for="Project.Manager" class="form-control" disabled />
+            <label asp-for="Project.Manager" class="form-label"></label>
+            <a asp-page="/Users/View" asp-route-id="@Model.Project.ManagerId" class="btn btn-secondary d-flex align-items-center">See details</a>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Accuracy" class="form-control" disabled />
+            <label asp-for="Project.Accuracy" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.Industry" class="form-control" disabled />
+            <label asp-for="Project.Industry" class="form-label"></label>
+        </div>
+        <h2>Language pair</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.SourceLanguage" class="form-control" disabled />
+                    <label asp-for="Project.SourceLanguage" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.TargetLanguage" class="form-control" disabled />
+                    <span></span>
+                    <label asp-for="Project.TargetLanguage" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Project size</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.Amount" class="form-control" disabled />
+                    <label asp-for="Project.Amount" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.Unit" class="form-control" disabled />
+                    <label asp-for="Project.Unit" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Schedule</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Project.ExpectedStart" class="form-control" disabled />
+            <label asp-for="Project.ExpectedStart" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.InternalDeadline" class="form-control" disabled />
+            <label asp-for="Project.InternalDeadline" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Project.ExternalDeadline" class="form-control" disabled />
+            <label asp-for="Project.ExternalDeadline" class="form-label"></label>
+        </div>
+        <h2>Budget</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.Budget" class="form-control" disabled />
+                    <label asp-for="Project.Budget" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Project.Currency" class="form-control" disabled />
+                    <label asp-for="Project.Currency" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+        <ul class="list-unstyled">
+            @foreach (var item in @Model.Comments)
+            {
+                <li class="mb-3">
+                    <div class="border rounded p-3"> 
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="m-0">@item.AuthorFullName</h5>
+                            <p class="m-0">@item.CreatedAt.ToRelativeDateTimeFromNow()</p>
+                        </div>
+                        <p class="m-0">
+                            @item.Comment
+                        </p>
+                    </div>
+                </li>
+            }
+            
+            @if (@Model.Comments.Count() == 0)
+            {
+                <li class="mb-3">
+                    <div class="border rounded p-3 text-center fst-italic text-black text-muted"> 
+                        It's kinda quiet here. Start a conversation by leaving a first comment.
+                    </div>
+                </li>
+            }
+        </ul>
+        <form method="post" asp-page-handler="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group mb-3 col-9">
+                    <input asp-for="CommentInput.Comment" class="form-control" aria-required="true" />
+                    <span asp-validation-for="CommentInput.Comment" class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <button id="create-submit" type="submit" class="w-100 btn btn-primary">Add comment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="files" role="tabpanel" aria-labelledby="files-tab">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFiles">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="mb-3">
+                        <input asp-for="FilesInput.Files" class="form-control form-control-lg" />
+                        <span asp-validation-for="FilesInput.Files" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Upload</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">File name</th>
+                    <th scope="col">Visible in tasks</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var file in @Model.TranslationProjectFiles)
+                {
+                    <tr>
+                        <td>@file.Name</td>
+                        <td>
+                            @foreach(var visibility in file.VisibleInTasks)
+                            {
+                                <div>
+                                    <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-route-id="@visibility.Id">@visibility.Title</a>
+                                </div>    
+                            }
+                        </td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationProjects/View" asp-page-handler="DownloadFile" asp-route-id="@Model.Id" asp-route-fileId="@file.Id">Download</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationProjectFiles.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3">No files</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+        <div class="mb-3">
+            <a class="btn btn-primary" asp-page="/TranslationTasks/Create" asp-route-projectId="@Model.Id">Create</a>
+        </div> 
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Language pair</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Dates</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Invites stats</th>
+                    <th scope="col">Accepted offer</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in @Model.TranslatorAssignments)
+                {
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.Title</td>
+                        <td>@task.TaskStatus.Title</td>
+                        <td>@task.SourceLanguage > @task.TargetLanguage</td>
+                        <td>@task.Unit.ToString(task.Amount)</td>
+                        <td>@task.ExpectedStart.ToString("dd/MM/yyyy") - @task.Deadline.ToString("dd/MM/yyyy")</td>
+                        <td>@task.Budget.ToString("C") @task.Currency</td>
+                        <td>
+                            <div>@($"{task.InvitesStats.InvitedTotal} invited total")</div>
+                            <div>
+                                <ul>
+                                    <li>@($"{task.InvitesStats.OffersSent} responded")</li>
+                                    <li>@($"{task.InvitesStats.OffersRejected} rejected")</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            @if (task.AcceptedInvite != null)
+                            {
+                                <a class="text-dark" asp-area="" asp-page="/Users/View" asp-route-id="@task.AcceptedInvite.TranslatorId">@task.AcceptedInvite.TranslatorFullName</a>
+                                <div>@task.AcceptedInvite.Price?.ToString("C") @task.AcceptedInvite.Currency</div>
+                            }
+                            else
+                            {
+                                <div>No accepted offer</div>
+                            }
+                        </td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-route-id="@task.Id">View</a>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationTasks/Edit" asp-route-id="@task.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslatorAssignments.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="10">No tasks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="actions" role="tabpanel" aria-labelledby="actions-tab">
+        <h2>Change status</h2>
+        <hr />
+        <div class="row">
+            @foreach (var status in ProjectStatus.All)
+            { 
+                <form class="col" method="post" asp-page-handler="MoveToStatus">
+                    <input type="hidden" id="status" name="status" value="@status.Value" />
+                    
+                    @if (status.Value == Model.Project.StatusEnum)
+                    {
+                        <button id="submit" type="submit" class="w-100 btn btn-lg btn-primary" disabled>@status.Title</button>
+                    }
+                    else
+                    {
+                        <button id="submit" type="submit" class="w-100 btn btn-lg btn-primary">@status.Title</button>
+                    }
+                </form>
+            }
+        </div>
+    </div>
+</div>

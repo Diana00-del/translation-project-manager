@@ -1,0 +1,58 @@
+﻿@page
+@using TranslationProjectManager.Data
+@model TranslationProjectManager.Pages.Users.IndexModel
+@{
+}
+
+<div>
+    <table class="table table-striped table-light">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Projects statistics</th>
+                <th scope="col">Tasks statistics</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.FullName</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Address</td>
+                    <td>
+                        <div>@($"{user.ProjectsStats.ProjectsCount} projects total")</div>
+                        <div>
+                            <ul>
+                                <li>@($"{user.ProjectsStats.NotStartedCount} not started")</li>
+                                <li>@($"{user.ProjectsStats.InProgressCount} in progress")</li>
+                                <li>@($"{user.ProjectsStats.FinalizedCount} finalized")</li>
+                                <li>@($"{user.ProjectsStats.CancelledCount} cancelled")</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <div>@($"{user.TasksStats.TasksCount} tasks total")</div>
+                        <div>
+                            <ul>
+                                <li>@($"{user.TasksStats.NotStartedCount} not started")</li>
+                                <li>@($"{user.TasksStats.InProgressCount} in progress")</li>
+                                <li>@($"{user.TasksStats.FinalizedCount} finalized")</li>
+                                <li>@($"{user.TasksStats.CancelledCount} cancelled")</li>
+                                <li>@($"{user.TasksStats.RejectedByUserCount} rejected by user")</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="text-dark" asp-page="/Users/View" asp-route-id="@(user.Id)">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

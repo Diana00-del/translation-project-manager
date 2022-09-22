@@ -1,0 +1,140 @@
+﻿@page "{id:long}"
+@model TranslationProjectManager.Pages.TranslatorAssignments.ReviewModel
+@{
+}
+
+<ul class="nav nav-tabs" id="inviteTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="invite-data-tab" data-bs-toggle="tab" data-bs-target="#invite-data" type="button" role="tab" aria-controls="invite-data" aria-selected="true">Task data</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">Files</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="actions-tab" data-bs-toggle="tab" data-bs-target="#actions" type="button" role="tab" aria-controls="actions" aria-selected="false">Actions</button>
+    </li>
+</ul>
+<div class="tab-content" id="inviteTabContent">
+    <div class="tab-pane fade show active pt-3 pb-3" id="invite-data" role="tabpanel" aria-labelledby="invite-data-tab">
+        <h2>Task info</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.Title" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.Title" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.Description" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.Description" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.Accuracy" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.Accuracy" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.Industry" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.Industry" class="form-label"></label>
+        </div>
+        <h2>Language pair</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Invite.SourceLanguage" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Invite.SourceLanguage" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Invite.TargetLanguage" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Invite.TargetLanguage" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Project size</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Invite.Amount" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Invite.Amount" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Invite.Unit" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Invite.Unit" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Schedule</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.ExpectedStart" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.ExpectedStart" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Invite.Deadline" class="form-control" aria-required="true" disabled />
+            <label asp-for="Invite.Deadline" class="form-label"></label>
+        </div>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="files" role="tabpanel" aria-labelledby="files-tab">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">File name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var file in @Model.TranslationTaskFiles)
+                {
+                    <tr>
+                        <td>@file.Name</td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationProjects/View" asp-page-handler="DownloadFile" asp-route-id="@Model.Id" asp-route-fileId="@file.Id">Download</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationTaskFiles.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">No files</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="actions" role="tabpanel" aria-labelledby="actions-tab">
+        <form method="post" asp-page-handler="Accept">
+            <h2>Put a price and accept offer</h2>
+            <hr />
+            <div class="mb-3 row">
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input asp-for="OfferInput.Price" class="form-control" aria-required="true" />
+                        <label asp-for="OfferInput.Price" class="form-label"></label>
+                        <span asp-validation-for="OfferInput.Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input asp-for="OfferInput.Currency" class="form-control" aria-required="true" />
+                        <label asp-for="OfferInput.Currency" class="form-label"></label>
+                        <span asp-validation-for="OfferInput.Currency" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Accept</button>
+            </div>
+        </form>
+        <form method="post" asp-page-handler="Reject">
+            <h2>Or reject offer</h2>
+            <hr />
+            <div>
+                <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Reject</button>
+            </div>
+        </form>
+    </div>
+</div>

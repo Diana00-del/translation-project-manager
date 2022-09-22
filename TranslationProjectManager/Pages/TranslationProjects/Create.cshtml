@@ -1,0 +1,134 @@
+﻿@page
+@model TranslationProjectManager.Pages.TranslationProjects.CreateModel
+@{
+    ViewData["Title"] = "New Project";
+}
+
+<div class="row">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<div class="row">
+    <div>
+        <section>
+            <form method="post">
+                <h2>Project info</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Title" class="form-control" aria-required="true" />
+                    <label asp-for="Input.Title" class="form-label"></label>
+                    <span asp-validation-for="Input.Title" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Description" class="form-control" aria-required="true" />
+                    <label asp-for="Input.Description" class="form-label"></label>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control" asp-for="Input.ClientId" asp-items="@Model.Clients">
+                        <option value="">Choose a client</option>
+                    </select>
+                    <label asp-for="Input.ClientId" class="form-label"></label>
+                    <span asp-validation-for="Input.ClientId" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control" asp-for="Input.ManagerId" asp-items="@Model.Managers">
+                        <option value="">Choose a manager</option>
+                    </select>
+                    <label asp-for="Input.ManagerId" class="form-label"></label>
+                    <span asp-validation-for="Input.ManagerId" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control" asp-for="Input.Accuracy" asp-items="@Model.Accuracies">
+                        <option value="">Choose an accuracy</option>
+                    </select>
+                    <label asp-for="Input.Accuracy" class="form-label"></label>
+                    <span asp-validation-for="Input.Accuracy" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control" asp-for="Input.Industry" asp-items="@Model.Industries">
+                        <option value="">Choose an industry</option>
+                    </select>
+                    <label asp-for="Input.Industry" class="form-label"></label>
+                    <span asp-validation-for="Input.Industry" class="text-danger"></span>
+                </div>
+                <h2>Language pair</h2>
+                <hr />                
+                <div class="mb-3 row">
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.SourceLanguage" class="form-control" aria-required="true" />
+                            <label asp-for="Input.SourceLanguage" class="form-label"></label>
+                            <span asp-validation-for="Input.SourceLanguage" class="text-danger"></span>
+                        </div>
+                     </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.TargetLanguage" class="form-control" aria-required="true" />
+                            <label asp-for="Input.TargetLanguage" class="form-label"></label>
+                            <span asp-validation-for="Input.TargetLanguage" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <h2>Project size</h2>
+                <hr />                
+                <div class="mb-3 row">
+                    <div class="col-6">   
+                        <div class="form-floating">
+                            <input asp-for="Input.Amount" class="form-control" aria-required="true" />
+                            <label asp-for="Input.Amount" class="form-label"></label>
+                            <span asp-validation-for="Input.Amount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <select class="form-control" asp-for="Input.Unit" asp-items="@Model.Units">
+                                <option value="">Choose an unit</option>
+                            </select>
+                            <label asp-for="Input.Unit" class="form-label"></label>
+                            <span asp-validation-for="Input.Unit" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <h2>Schedule</h2>
+                <hr />
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ExpectedStart" class="form-control" aria-required="true" />
+                    <label asp-for="Input.ExpectedStart" class="form-label"></label>
+                    <span asp-validation-for="Input.ExpectedStart" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.InternalDeadline" class="form-control" aria-required="true" />
+                    <label asp-for="Input.InternalDeadline" class="form-label"></label>
+                    <span asp-validation-for="Input.InternalDeadline" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ExternalDeadline" class="form-control" aria-required="true" />
+                    <label asp-for="Input.ExternalDeadline" class="form-label"></label>
+                    <span asp-validation-for="Input.ExternalDeadline" class="text-danger"></span>
+                </div>
+                <h2>Budget</h2>
+                <hr /> 
+                <div class="mb-3 row">
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Budget" class="form-control" aria-required="true" />
+                            <label asp-for="Input.Budget" class="form-label"></label>
+                            <span asp-validation-for="Input.Budget" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.Currency" class="form-control" aria-required="true" />
+                            <label asp-for="Input.Currency" class="form-label"></label>
+                            <span asp-validation-for="Input.Currency" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Create</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

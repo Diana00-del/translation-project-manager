@@ -1,0 +1,74 @@
+﻿@page
+@model TranslationProjectManager.Pages.TranslationTasks.IndexModel
+@{
+}
+
+<div>
+    <div class="mb-3">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Language pair</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Dates</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Invites stats</th>
+                    <th scope="col">Accepted offer</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in @Model.TranslationTasks)
+                {
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.Title</td>
+                        <td>@task.TaskStatus.Title</td>
+                        <td>@task.SourceLanguage > @task.TargetLanguage</td>
+                        <td>@task.Unit.ToString(task.Amount)</td>
+                        <td>@task.ExpectedStart.ToString("dd/MM/yyyy") - @task.Deadline.ToString("dd/MM/yyyy")</td>
+                        <td>@task.Budget.ToString("C") @task.Currency</td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationProjects/View" asp-route-id="@task.TranslationProjectId">@task.TranslationProjectTitle</a>
+                        </td>
+                        <td>
+                            <div>@($"{task.InvitesStats.InvitedTotal} invited total")</div>
+                            <div>
+                                <ul>
+                                    <li>@($"{task.InvitesStats.OffersSent} responded")</li>
+                                    <li>@($"{task.InvitesStats.OffersRejected} rejected")</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            @if (task.AcceptedInvite != null)
+                            {
+                                <a class="text-dark" asp-area="" asp-page="/Users/View" asp-route-id="@task.AcceptedInvite.TranslatorId">@task.AcceptedInvite.TranslatorFullName</a>
+                                <div>@task.AcceptedInvite.Price?.ToString("C") @task.AcceptedInvite.Currency</div>
+                            }
+                            else
+                            {
+                                <div>No accepted offer</div>
+                            }
+                        </td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-route-id="@task.Id">View</a>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationTasks/Edit" asp-route-id="@task.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationTasks.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="10">No tasks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿@page
+@model TranslationProjectManager.Pages.TranslationProjects.IndexModel
+@{
+}
+
+<div>
+    <div class="mb-3">
+        <a class="btn btn-primary" asp-page="/TranslationProjects/Create">Create</a>
+    </div>
+    <div class="mb-3">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Language pair</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Industry</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Expected start</th>
+                    <th scope="col">Deadlines</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Tasks statistics</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in @Model.TranslationProjects)
+                {
+                    <tr>
+                        <td>@project.Id</td>
+                        <td>@project.Title</td>
+                        <td>@project.ProjectStatus.Title</td>
+                        <td>@project.SourceLanguage > @project.TargetLanguage</td>
+                        <td>@project.Client.Name</td>
+                        <td>@project.Industry.Title</td>
+                        <td>@project.Unit.ToString(project.CharactersNumber)</td>
+                        <td>@project.ExpectedStart.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <div>Deadlines</div>
+                            <div>
+                                <ul>
+                                    <li>Internal: @project.InternalDeadline.ToString("dd/MM/yyyy")</li>
+                                    <li>External: @project.ExternalDeadline.ToString("dd/MM/yyyy")</li>
+                                </ul>
+                            </div></td>
+                        <td>@project.Budget.ToString("C") @project.Currency</td>
+                        <td>
+                            <div>@($"{project.TasksStats.TasksCount} tasks total")</div>
+                            <div>
+                                <ul>
+                                    <li>@($"{project.TasksStats.NotStartedCount} not started")</li>
+                                    <li>@($"{project.TasksStats.InProgressCount} in progress")</li>
+                                    <li>@($"{project.TasksStats.FinalizedCount} finalized")</li>
+                                    <li>@($"{project.TasksStats.CancelledCount} cancelled")</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="text-dark" asp-page="/TranslationProjects/View" asp-route-id="@(project.Id)">View</a>
+                            <a class="text-dark" asp-page="/TranslationProjects/Edit" asp-route-id="@(project.Id)">Edit</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationProjects.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="12">No projects</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

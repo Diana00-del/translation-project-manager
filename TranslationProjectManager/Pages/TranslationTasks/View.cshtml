@@ -1,0 +1,276 @@
+﻿@page "{id:long}"
+@using TranslationProjectManager.Utils
+@model TranslationProjectManager.Pages.TranslationTasks.ViewModel
+@{
+    ViewData["Title"] = "Task";
+}
+
+<ul class="nav nav-tabs" id="projectTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="task-data-tab" data-bs-toggle="tab" data-bs-target="#task-data" type="button" role="tab" aria-controls="task-data" aria-selected="true">Task data</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">Files</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="invitations-tab" data-bs-toggle="tab" data-bs-target="#invitations" type="button" role="tab" aria-controls="invitations" aria-selected="false">Invites</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="actions-tab" data-bs-toggle="tab" data-bs-target="#actions" type="button" role="tab" aria-controls="actions" aria-selected="false">Actions</button>
+    </li>
+</ul>
+<div class="tab-content" id="projectTabContent">
+    <div class="tab-pane fade show active pt-3 pb-3" id="task-data" role="tabpanel" aria-labelledby="task-data-tab">
+        <h2>Task info</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Title" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Title" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Description" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Description" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Status" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Status" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3 input-group">
+            <input asp-for="Task.ProjectTitle" class="form-control" disabled />
+            <label asp-for="Task.ProjectTitle" class="form-label"></label>
+            <a asp-page="/TranslationProjects/View" asp-route-id="@Model.Task.ProjectId" class="btn btn-secondary d-flex align-items-center">See details</a>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Accuracy" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Accuracy" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Industry" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Industry" class="form-label"></label>
+        </div>
+        <h2>Language pair</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.SourceLanguage" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.SourceLanguage" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.TargetLanguage" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.TargetLanguage" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Project size</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.Amount" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.Amount" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.Unit" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.Unit" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+        <h2>Schedule</h2>
+        <hr />
+        <div class="form-floating mb-3">
+            <input asp-for="Task.ExpectedStart" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.ExpectedStart" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Task.Deadline" class="form-control" aria-required="true" disabled />
+            <label asp-for="Task.Deadline" class="form-label"></label>
+        </div>
+        <h2>Budget</h2>
+        <hr />
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.Budget" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.Budget" class="form-label"></label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                    <input asp-for="Task.Currency" class="form-control" aria-required="true" disabled />
+                    <label asp-for="Task.Currency" class="form-label"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+        <ul class="list-unstyled">
+            @foreach (var item in @Model.Comments)
+            {
+                <li class="mb-3">
+                    <div class="border rounded p-3"> 
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="m-0">@item.AuthorFullName</h5>
+                            <p class="m-0">@item.CreatedAt.ToRelativeDateTimeFromNow()</p>
+                        </div>
+                        <p class="m-0">
+                            @item.Comment
+                        </p>
+                    </div>
+                </li>
+            }
+            
+            @if (@Model.Comments.Count() == 0)
+            {
+                <li class="mb-3">
+                    <div class="border rounded p-3 text-center fst-italic text-black text-muted"> 
+                        It's kinda quiet here. Start a conversation by leaving a first comment.
+                    </div>
+                </li>
+            }
+        </ul>
+        <form method="post" asp-page-handler="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group mb-3 col-9">
+                    <input asp-for="CommentInput.Comment" class="form-control" aria-required="true" />
+                    <span asp-validation-for="CommentInput.Comment" class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <button id="create-submit" type="submit" class="w-100 btn btn-primary">Add comment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="files" role="tabpanel" aria-labelledby="files-tab">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="UploadFiles">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="mb-3">
+                        <input asp-for="FilesInput.Files" class="form-control form-control-lg" />
+                        <span asp-validation-for="FilesInput.Files" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Upload</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">File name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var file in @Model.TranslationTaskFiles)
+                {
+                    <tr>
+                        <td>@file.Name</td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationProjects/View" asp-page-handler="DownloadFile" asp-route-id="@Model.Id" asp-route-fileId="@file.Id">Download</a>
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationTaskFiles.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">No files</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="invitations" role="tabpanel" aria-labelledby="invitations-tab">
+        <form method="post" asp-page-handler="Invite">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-floating mb-3">
+                        <select class="form-control" asp-for="InviteInput.TranslatorId" asp-items="@Model.Translators">
+                            <option value="">Choose a translator</option>
+                        </select>
+                        <label asp-for="InviteInput.TranslatorId" class="form-label"></label>
+                        <span asp-validation-for="InviteInput.TranslatorId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button id="create-submit" type="submit" class="w-100 btn btn-lg btn-primary">Invite</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Translator</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invite in @Model.Invites)
+                {
+                    <tr>
+                        <td>@invite.Id</td>
+                        <td>@invite.Status.Title</td>
+                        <td>@invite.Price?.ToString("C") @invite.Currency</td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/Users/View" asp-route-id="@invite.Id">@invite.TranslatorFullName</a>
+                        </td>
+                        <td>
+                            @if (@invite.Status.Value == Data.TranslatorAssignmentStatusEnum.OfferSent)
+                            {
+                                <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-page-handler="AcceptOffer" asp-route-id="@Model.Id" asp-route-inviteId="@invite.Id">Accept offer</a>
+                                <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-page-handler="RejectOffer" asp-route-id="@Model.Id" asp-route-inviteId="@invite.Id">Reject offer</a>
+                            }
+                            @if (@invite.Status.Value != Data.TranslatorAssignmentStatusEnum.InviteCancelled && @invite.Status.Value != Data.TranslatorAssignmentStatusEnum.InviteRejected && @invite.Status.Value != Data.TranslatorAssignmentStatusEnum.Accepted)
+                            {
+                                <a class="text-dark" asp-area="" asp-page="/TranslationTasks/View" asp-page-handler="CancelInvite" asp-route-id="@Model.Id" asp-route-inviteId="@invite.Id">Cancel invite</a>
+                            }
+                        </td>
+                    </tr>
+                }
+
+                @if (@Model.Invites.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5">No invites</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="actions" role="tabpanel" aria-labelledby="actions-tab">
+        <h2>Change status</h2>
+        <hr />
+        <div class="row">
+            @foreach (var status in Data.TaskStatus.All)
+            { 
+                <form class="col" method="post" asp-page-handler="MoveToStatus">
+                    <input type="hidden" id="status" name="status" value="@status.Value" />
+                    
+                    @if (status.Value == Model.Task.StatusEnum)
+                    {
+                        <button id="submit" type="submit" class="w-100 btn btn-lg btn-primary" disabled>@status.Title</button>
+                    }
+                    else
+                    {
+                        <button id="submit" type="submit" class="w-100 btn btn-lg btn-primary">@status.Title</button>
+                    }
+                </form>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,204 @@
+﻿@page "{id}"
+@model TranslationProjectManager.Pages.Users.ViewModel
+@{
+}
+
+<div>
+    <h1>User @Model.User.FirstName @Model.User.LastName details</h1>
+</div>
+
+<ul class="nav nav-tabs" id="userTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="personal-data-tab" data-bs-toggle="tab" data-bs-target="#personal-data" type="button" role="tab" aria-controls="personal-data" aria-selected="true">Personal Data</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab" aria-controls="projects" aria-selected="false">Projects</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks" type="button" role="tab" aria-controls="tasks" aria-selected="false">Tasks</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="roles-tab" data-bs-toggle="tab" data-bs-target="#roles" type="button" role="tab" aria-controls="roles" aria-selected="false">Roles</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="claims-tab" data-bs-toggle="tab" data-bs-target="#claims" type="button" role="tab" aria-controls="cliams" aria-selected="false">Claims</button>
+    </li>
+</ul>
+<div class="tab-content" id="userTabContent">
+    <div class="tab-pane fade show active pt-3 pb-3" id="personal-data" role="tabpanel" aria-labelledby="personal-data-tab">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="firstName" value="@Model.User.FirstName" disabled>
+            <label for="firstName">First name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="lastName" value="@Model.User.LastName" disabled>
+            <label for="lastName">Last name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="email" value="@Model.User.Email" disabled>
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="phoneNumber" value="@Model.User.PhoneNumber" disabled>
+            <label for="phoneNumber">Phone number</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="address" value="@Model.User.Address" disabled>
+            <label for="address">Address</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="city" value="@Model.User.City" disabled>
+            <label for="city">City</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="state" value="@Model.User.State" disabled>
+            <label for="state">State</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="zipCode" value="@Model.User.Zip" disabled>
+            <label for="zipCode">Zip code</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="country" value="@Model.User.Country" disabled>
+            <label for="country">Country</label>
+        </div>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Language pair</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Industry</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Dates</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Tasks count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in @Model.TranslationProjects)
+                {
+                    <tr>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/TranslationProjects/View" asp-route-id="@project.Id">@project.Title</a>
+                        </td>
+                        <td>@project.ProjectStatus.Title</td>
+                        <td>@project.SourceLanguage > @project.TargetLanguage</td>
+                        <td>@project.Client.Name</td>
+                        <td>@project.Industry.Title</td>
+                        <td>@project.Unit.ToString(project.CharactersNumber)</td>
+                        <td>@project.ExpectedStart.ToString("dd/MM/yyyy") - @project.ExternalDeadline.ToString("dd/MM/yyyy")</td>
+                        <td>@project.Budget.ToString("C") @project.Currency</td>
+                        <td>@project.TasksCount</td>
+                    </tr>
+                }
+
+                @if (@Model.TranslationProjects.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="9">No projects</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Budget requested</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Task status</th>
+                    <th scope="col">Language pair</th>
+                    <th scope="col">Industry</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Dates</th>
+                    <th scope="col">Budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in @Model.TranslatorAssignments)
+                {
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.TranslatorAssignmentStatus.Title</td>
+                        <td>@task.PriceRequested?.ToString("C") @task.CurrencyRequested</td>
+                        <td>
+                            <a class="text-dark" asp-area="" asp-page="/Tasks/View" asp-route-id="@task.TaskId">@task.TaskTitle</a>
+                        </td>
+                        <td>@task.TaskStatus.Title</td>
+                        <td>@task.SourceLanguage > @task.TargetLanguage</td>
+                        <td>@task.Industry.Title</td>
+                        <td>@task.Unit.ToString(task.Amount)</td>
+                        <td>@task.ExpectedStart.ToString("dd/MM/yyyy") - @task.Deadline.ToString("dd/MM/yyyy")</td>
+                        <td>@task.Budget.ToString("C") @task.Currency</td>
+                    </tr>
+                }
+
+                @if (@Model.TranslatorAssignments.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="10">No tasks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in @Model.UserRoles)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.Name</td>
+                    </tr>
+                }
+
+                @if (@Model.UserRoles.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">No roles</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade pt-3 pb-3" id="claims" role="tabpanel" aria-labelledby="claims-tab">
+        <table class="table table-striped table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in @Model.UserClaims)
+                {
+                    <tr>
+                        <td>@role.ClaimType</td>
+                        <td>@role.ClaimValue</td>
+                    </tr>
+                }
+
+                @if (@Model.UserClaims.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">No claims</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

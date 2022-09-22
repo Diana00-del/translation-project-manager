@@ -1,0 +1,54 @@
+﻿@model TranslationProjectManager.Models.Clients.ViewModel
+@{
+}
+
+<div>
+    <h1>@Model.Id: @Model.Name details</h1>
+</div>
+<div class="mb-3">
+    <form method="post">
+        <div class="form-group mb-3">
+            <label for="Type">Client type</label>
+            <input class="form-control" type="text" asp-for="Type" readonly />
+        </div>
+        <div class="form-group mb-3">
+            <label for="Name">Client name</label>
+            <input class="form-control" type="text" asp-for="Name" readonly />
+        </div>
+        <div class="form-group mb-3">
+            <label for="Email">Client email</label>
+            <input class="form-control" type="email" asp-for="Email" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Phone">Client phone</label>
+            <input class="form-control" type="text" asp-for="Phone" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Address">Client address</label>
+            <input class="form-control" type="text" asp-for="Address" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="City">Client city</label>
+            <input class="form-control" type="text" asp-for="City" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="State">Client state</label>
+            <input class="form-control" type="text" asp-for="State" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Zip">Client zip</label>
+            <input class="form-control" type="text" asp-for="Zip" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="Country">Client country</label>
+            <input class="form-control" type="text" asp-for="Country" readonly/>
+        </div>
+        <div class="form-group mb-3">
+            <label for="VAT">VAT</label>
+            <input class="form-control" type="text" asp-for="VAT" readonly/>
+        </div>
+    </form>
+</div>
+<div class="mb-3">
+    <a class="btn btn-primary" asp-controller="Clients" asp-action="Edit" asp-route-id="@Model.Id">Edit client</a>
+</div>
